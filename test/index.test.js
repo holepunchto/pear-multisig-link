@@ -79,3 +79,42 @@ test('different quorum values produce different links', async function ({
   })
   not(a, b)
 })
+
+test('throws on missing namespace', async function ({ exception }) {
+  exception(() => link({ publicKeys: PUBKEYS, quorum: 2 }), {
+    message: 'namespace required'
+  })
+})
+
+test('throws on empty namespace', async function ({ exception }) {
+  exception(() => link({ publicKeys: PUBKEYS, namespace: '', quorum: 2 }), {
+    message: 'namespace required'
+  })
+})
+
+test('throws on invalid public key', async function ({ exception }) {
+  const invalid = 'notavalidkey'
+  exception(
+    () =>
+      link({
+        publicKeys: [invalid, ...PUBKEYS],
+        namespace: 'test/app',
+        quorum: 2
+      }),
+    { message: 'Invalid publicKeys signing key: ' + invalid }
+  )
+})
+
+test('throws on non-integer quorum', async function ({ exception }) {
+  exception(
+    () => link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: 1.5 }),
+    { message: 'Invalid quorom: 1.5' }
+  )
+})
+
+test('throws on non-numeric quorum', async function ({ exception }) {
+  exception(
+    () => link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: '2' }),
+    { message: 'Invalid quorom: 2' }
+  )
+})

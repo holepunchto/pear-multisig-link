@@ -51,11 +51,11 @@ const cmd = command(
     if (!multisig) throw ERR_INVALID_CONFIG('multisig field required')
 
     if (!multisig.namespace) {
-      throw ERR_INVALID_CONFIG('multisig namespace required')
+      throw ERR_INVALID_CONFIG('namespace required')
     }
-    if (!multisig.quorum) throw ERR_INVALID_CONFIG('multisig quorum required')
+    if (!multisig.quorum) throw ERR_INVALID_CONFIG('quorum required')
     if (!multisig.publicKeys || multisig.publicKeys.length === 0) {
-      throw ERR_INVALID_CONFIG('multisig publicKeys required')
+      throw ERR_INVALID_CONFIG('publicKeys required')
     }
 
     console.log(multisigLink(multisig))
