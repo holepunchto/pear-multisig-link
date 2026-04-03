@@ -108,13 +108,27 @@ test('throws on invalid public key', async function ({ exception }) {
 test('throws on non-integer quorum', async function ({ exception }) {
   exception(
     () => link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: 1.5 }),
-    { message: 'Invalid quorom: 1.5' }
+    { message: 'Invalid quorum: 1.5' }
   )
 })
 
 test('throws on non-numeric quorum', async function ({ exception }) {
   exception(
     () => link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: '2' }),
-    { message: 'Invalid quorom: 2' }
+    { message: 'Invalid quorum: 2' }
+  )
+})
+
+test('throws on empty publicKeys', async function ({ exception }) {
+  exception(
+    () => link({ publicKeys: [], namespace: 'test/app', quorum: 2 }),
+    { message: 'publicKeys required' }
+  )
+})
+
+test('throws on missing publicKeys', async function ({ exception }) {
+  exception(
+    () => link({ namespace: 'test/app', quorum: 2 }),
+    { message: 'publicKeys required' }
   )
 })
