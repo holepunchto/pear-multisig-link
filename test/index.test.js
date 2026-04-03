@@ -132,3 +132,15 @@ test('throws on missing publicKeys', async function ({ exception }) {
     { message: 'publicKeys required' }
   )
 })
+
+test('throws when quorum exceeds signer count', async function ({ exception }) {
+  exception(
+    () => link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: PUBKEYS.length + 1 }),
+    { message: 'Invalid quorum: ' + (PUBKEYS.length + 1) + ' is greater than ' + PUBKEYS.length + ' signing keys' }
+  )
+})
+
+test('allows quorum equal to signer count', async function ({ ok }) {
+  const result = link({ publicKeys: PUBKEYS, namespace: 'test/app', quorum: PUBKEYS.length })
+  ok(result.startsWith('pear://'))
+})

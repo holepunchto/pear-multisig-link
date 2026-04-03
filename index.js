@@ -20,6 +20,9 @@ module.exports = function link(config) {
   if (Number.isInteger(quorum) === false) {
     throw ERR_INVALID_INPUT('Invalid quorum: ' + quorum)
   }
+  if (quorum > publicKeys.length) {
+    throw ERR_INVALID_INPUT('Invalid quorum: ' + quorum + ' is greater than ' + publicKeys.length + ' signing keys')
+  }
   const key = HyperMultisig.getCoreKey(publicKeys, namespace, { quorum })
   return plink.serialize({ drive: { key } })
 }
