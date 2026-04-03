@@ -1,6 +1,6 @@
 {
   "name": "pear-multisig-link",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "type": "commonjs",
   "description": "Deterministic multisig link per multisig inputs",
